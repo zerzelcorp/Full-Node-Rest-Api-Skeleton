@@ -1,16 +1,28 @@
 {
-  "name": "coursera-week2",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "start": "node ./bin/www"
-  },
   "dependencies": {
+    "assert": "^2.0.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
+    "mongodb": "4.12",
+    "mongoose": "^6.7.5",
     "morgan": "~1.9.1"
-  }
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  },
+  "name": "coursera-week2",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "matias montiel",
+  "license": "ISC",
+  "description": ""
 }

@@ -4,9 +4,10 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const indexRouter = require('./routes/index');
+require('./db');
+const app = express();
 const PORT = 3000 || PORT.env;
 
-const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -20,9 +21,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 //routes middlewares
 app.use('/', indexRouter);
-app.use('/dishes', require('./dishRouter'))
-app.use('/promotions', require('./promoRouter'))
-app.use('/leader', require('./leaderRouter'))
+app.use('/dishes', require('./routes/dishRouter'))
+app.use('/promotions', require('./routes/promoRouter'))
+app.use('/leader', require('./routes/leaderRouter'))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

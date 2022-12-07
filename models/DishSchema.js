@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+const { Schema, model } = require('mongoose');
 
 const CommentSchema = new Schema({
     comment:{type:String,required:true,unique:true},
@@ -6,19 +6,17 @@ const CommentSchema = new Schema({
     author:{type:String,requried:true},
     date: { type: Date, default: Date.now },
 })
-require('mongoose-currency').loadType(mongoose);
-const Currency=mongoose.Types.Currency;
 
 const DishSchema = new Schema({
     name:{type:String,required:true,unique:true},
-    image:String,
-    category:String,
+    image:{type:String,required:true},
+    category:{type:String,required:true},
     label:{type:String,default:""},
-    price:Currency,
-    featured:Boolean,
+    price:{type:Number,required:true},
+    featured:{type:Boolean,default:false},
     description:{type:String,required:true},
     comments:[CommentSchema],//rating,comment,author,date
     date: { type: Date, default: Date.now },
 })
 
-export default model("Dish",DishSchema);
+module.exports= model("Dish",DishSchema);

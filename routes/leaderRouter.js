@@ -43,7 +43,7 @@ try {
         res.status(404).send({status:"error",message:`${error}`})  
     }
 })
-.deleteasync(async(req,res) => {
+.delete(async(req,res) => {
     const {id}=req.params
     try {
         await Leader.deleteOne({id})

@@ -108,7 +108,7 @@ dishRouter
       )
       .catch((err) => next(err));
   })
-  .put(cors.corsWithOptions,verifyAdmin,(req, res, next) => {
+  .put(verifyAdmin,(req, res, next)=>{
     Dishes.findById(req.params.dishId)
       .then(
         (dish) => {
@@ -145,7 +145,7 @@ dishRouter
       )
       .catch((err) => next(err));
   })
-  .delete(cors.corsWithOptions,verifyAdmin,(req, res, next) => {
+  .delete(verifyAdmin,(req, res, next) => {
     Dishes.findById(req.params.dishId)
       .then(
         (dish) => {

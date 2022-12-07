@@ -90,7 +90,7 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render("error");
 });
-//init server
+//INIT SERVER
 app.listen(PORT, () => {
   mongoose.connect("mongodb://localhost:27017/coursera-week2",{useNewUrlParser:true,useUnifiedTopology:true})
 .then(()=>{

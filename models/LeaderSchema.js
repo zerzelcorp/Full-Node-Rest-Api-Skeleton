@@ -2,7 +2,7 @@ const {Schema,model} = require('mongoose')
 
 const LeaderSchema = new Schema({
     name:{type:String,required:true,unique:true},
-    iamge:String,
+    image:String,
     designation:String,
     abbr:String,
     description:{type:String},

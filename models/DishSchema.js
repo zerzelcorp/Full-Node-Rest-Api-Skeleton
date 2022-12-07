@@ -3,9 +3,8 @@ const { Schema, model } = require('mongoose');
 const CommentSchema = new Schema({
     comment:{type:String,required:true,unique:true},
     rating:{type:String,min:1,max:5},
-    author:{type:String,requried:true},
-    date: { type: Date, default: Date.now },
-})
+    author:{ type: Schema.Types.ObjectId, ref: 'User'},
+},{timestamps:true})
 
 const DishSchema = new Schema({
     name:{type:String,required:true,unique:true},

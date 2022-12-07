@@ -1,12 +1,13 @@
 const express = require('express');
-const LeaderSchema = require('../models/LeaderSchema');
+const Leader = require('../models/LeaderSchema');
+const {verifyAdmin,verifyUser}= require('../authenticate')
 
 const leaderRouter = express.Router()
 
 leaderRouter.route("/")
 .all(async(req,res) => {
     try {
-        const leader = await LeaderSchema.find({})         
+        const leader = await Leader.find({})         
         res.status(200).send({res:leader})       
         } catch (error) {
             res.status(404).send({message:`${error}`})
@@ -15,16 +16,15 @@ leaderRouter.route("/")
 .get(async(req,res) => {
     const {id}= req.params
     try {
-        const leader = await LeaderSchema.findById(id)  
+        const leader = await Leader.findById(id)  
         res.status(200).send({res:leader})        
         } catch (error) {
             res.status(404).send({message:`${error}`})
         }
 })
-.post(async(req,res) => {
-    const {name,image,designation,abbr,description,featured} = req.body;
+.post(verifyAdmin,async(req,res) => {
 try {  
-   let leader = LeaderSchema.findOne({title})
+   let leader = Leader.findOne(req.body.name)
    if(leader){
        return res.status(400).send({status:"error",msj:"already a post with this title"})
    }
@@ -34,7 +34,7 @@ try {
 } catch (error) {
    res.status(409).send({status:"error","message":`${error}`})  
 }})
-.put(async(req,res) => {
+.put(verifyAdmin,async(req,res) => {
     const {id} = req.params
     try {
         await Leader.findByIdAndUpdate(id,req.body)
@@ -43,7 +43,7 @@ try {
         res.status(404).send({status:"error",message:`${error}`})  
     }
 })
-.delete(async(req,res) => {
+.delete(verifyAdmin,async(req,res) => {
     const {id}=req.params
     try {
         await Leader.deleteOne({id})

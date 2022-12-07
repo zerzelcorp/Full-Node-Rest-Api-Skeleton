@@ -1,5 +1,6 @@
 const {Router} = require('express')
 const Promo= require('../models/PromoSchema');
+const {verifyAdmin,verifyUser}= require('../authenticate')
 
 const promoRouter = Router()
 
@@ -22,7 +23,7 @@ promoRouter.get('/promotions/:id',async(req,res)=>{
         }
 })
 
-promoRouter.post('/promotions',async(req,res)=>{
+promoRouter.post('/promotions',verifyAdmin,async(req,res)=>{
     try {  
         let promo = Promo.findOne(req.body.name)
         // if(promo){
@@ -36,7 +37,7 @@ promoRouter.post('/promotions',async(req,res)=>{
 }
 })
 
-promoRouter.put('/promotions/:id',async(req,res)=>{
+promoRouter.put('/promotions/:id',verifyAdmin,async(req,res)=>{
     const {id} = req.params
     try {
         await Promo.findByIdAndUpdate(id,req.body)
@@ -46,7 +47,7 @@ promoRouter.put('/promotions/:id',async(req,res)=>{
     }
 })
 
-promoRouter.delete('/promotions/:id',async(req,res) => {
+promoRouter.delete('/promotions/:id',verifyAdmin,async(req,res) => {
         const {id}=req.params
         try {
             await Promo.deleteOne({id})

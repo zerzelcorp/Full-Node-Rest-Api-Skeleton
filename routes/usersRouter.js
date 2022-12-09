@@ -16,6 +16,13 @@ try {
 }
 });
 
+usersRouter.get('/facebook/token', passport.authenticate('facebook-token'), (req, res) => {
+  if (req.user) {
+   const token = authenticate.getToken({_id: req.user._id});
+    res.status(200).send({success: true, token: token, status: 'You are successfully logged in!'})
+  }
+});
+
  usersRouter.post('/signup',(req, res, next) => {
     User.register(new User({username: req.body.username}), 
       req.body.password, (err, user) => {

@@ -1,10 +1,10 @@
 const { Router } = require("express");
 const Dishes = require("../models/DishSchema");
-const cors =require('cors')
 const { verifyUser, verifyAdmin } = require("../authenticate");
+const {cors,corsWithOptions} = require('./cors');
 const dishRouter = Router();
 
-dishRouter.route("/").get((req, res, next) => {
+dishRouter.route("/").get(cors,(req, res, next) => {
   Dishes.find({})
     .populate("comments.author")
     .then(
@@ -18,7 +18,7 @@ dishRouter.route("/").get((req, res, next) => {
     .catch((err) => next(err));
 });
 
-dishRouter.route("/:dishId").get((req,res,next) => {
+dishRouter.route("/:dishId").get(cors,(req,res,next) => {
   Dishes.findById(req.params.dishId)
     .populate("comments.author")
     .then(
@@ -34,7 +34,7 @@ dishRouter.route("/:dishId").get((req,res,next) => {
 
 dishRouter
   .route("/:dishId/comments")
-  .get((req, res, next) => {
+  .get(cors,(req, res, next) => {
     Dishes.findById(req.params.dishId)
       .populate("comments.author")
       .then(
@@ -53,7 +53,7 @@ dishRouter
       )
       .catch((err) => next(err));
   })
-  .post(verifyAdmin,(req, res, next) => {
+  .post(corsWithOptions,verifyAdmin,(req, res, next) => {
     Dishes.findById(req.params.dishId)
       .then(
         (dish) => {
@@ -85,7 +85,7 @@ dishRouter
 
 dishRouter
   .route("/:dishId/comments/:commentId")
-  .get((req, res, next) => {
+  .get(cors,(req, res, next) => {
     Dishes.findById(req.params.dishId)
       .populate("comments.author")
       .then(
@@ -108,7 +108,7 @@ dishRouter
       )
       .catch((err) => next(err));
   })
-  .put(verifyAdmin,(req, res, next)=>{
+  .put(corsWithOptions,verifyAdmin,(req, res, next)=>{
     Dishes.findById(req.params.dishId)
       .then(
         (dish) => {
@@ -145,7 +145,7 @@ dishRouter
       )
       .catch((err) => next(err));
   })
-  .delete(verifyAdmin,(req, res, next) => {
+  .delete(corsWithOptions,verifyAdmin,(req, res, next) => {
     Dishes.findById(req.params.dishId)
       .then(
         (dish) => {
